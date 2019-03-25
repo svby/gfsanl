@@ -66,13 +66,17 @@ fun locateGrib(date: LocalDate, hour: Int, precision: Int = 25): URI {
     }
 }
 
+private fun parseGrib(string: String) = NetcdfFile.openInMemory(string)
+
+fun parseGrib(file: File) = parseGrib(file.toString())
+
 fun parseGrib(url: URI): NetcdfFile {
     val temp = File(System.getProperty("java.io.tmpdir"), "gfsanl-temp")
-    temp.deleteRecursively()
+    temp.listFiles()?.forEach { it.deleteRecursively() } ?: temp.deleteRecursively()
     temp.mkdirs()
 
     val downloaded = File(temp, url.path.substringAfterLast("/"))
     Files.copy(url.toURL().openStream(), downloaded.toPath())
 
-    return NetcdfFile.openInMemory(downloaded.toString())
+    return parseGrib(downloaded)
 }
