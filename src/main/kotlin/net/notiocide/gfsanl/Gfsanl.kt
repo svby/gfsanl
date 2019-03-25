@@ -2,7 +2,10 @@
 
 package net.notiocide.gfsanl
 
+import ucar.nc2.NetcdfFile
+import java.io.File
 import java.net.URI
+import java.nio.file.Files
 import java.time.LocalDate
 import java.time.ZoneOffset
 import java.time.temporal.ChronoUnit
@@ -61,4 +64,15 @@ fun locateGrib(date: LocalDate, hour: Int, precision: Int = 25): URI {
             }
         )
     }
+}
+
+fun parseGrib(url: URI): NetcdfFile {
+    val temp = File(System.getProperty("java.io.tmpdir"), "gfsanl-temp")
+    temp.deleteRecursively()
+    temp.mkdirs()
+
+    val downloaded = File(temp, url.path.substringAfterLast("/"))
+    Files.copy(url.toURL().openStream(), downloaded.toPath())
+
+    return NetcdfFile.openInMemory(downloaded.toString())
 }

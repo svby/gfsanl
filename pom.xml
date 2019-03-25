@@ -16,7 +16,16 @@
         <kotlin.code.style>official</kotlin.code.style>
 
         <junit.version>4.12</junit.version>
+
+        <netcdf.version>5.0.0-beta6</netcdf.version>
     </properties>
+
+    <repositories>
+        <repository>
+            <id>ucar</id>
+            <url>https://artifacts.unidata.ucar.edu/content/repositories/unidata-releases/</url>
+        </repository>
+    </repositories>
 
     <dependencies>
         <dependency>
@@ -24,6 +33,12 @@
             <artifactId>kotlin-stdlib-jdk8</artifactId>
             <version>${kotlin.version}</version>
         </dependency>
+        <dependency>
+            <groupId>edu.ucar</groupId>
+            <artifactId>netcdfAll</artifactId>
+            <version>${netcdf.version}</version>
+        </dependency>
+
         <dependency>
             <groupId>org.jetbrains.kotlin</groupId>
             <artifactId>kotlin-test-junit</artifactId>
