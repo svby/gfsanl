@@ -9,10 +9,9 @@ import java.nio.file.Files
 import java.time.LocalDate
 import java.time.ZoneOffset
 import java.time.temporal.ChronoUnit
-import kotlin.math.abs
 
 fun locateGrib(date: LocalDate, hour: Int, precision: Int = 25): URI {
-    if (abs(ChronoUnit.DAYS.between(LocalDate.now(ZoneOffset.UTC), date)) <= 7) {
+    if (ChronoUnit.DAYS.between(date, LocalDate.now(ZoneOffset.UTC)) <= 7) {
         return URI.create(
             buildString {
                 append("https://nomads.ncep.noaa.gov/pub/data/nccf/com/gfs/prod/")
